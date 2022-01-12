@@ -9,24 +9,17 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-bordered">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.StudentName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student_Rollno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student_Email)
-            </th>
+          <th>Picture</th>
             <th>
                 @Html.DisplayNameFor(model => model.Student_Section)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student_Department)
-            </th>
+           
             <th>
                 @Html.DisplayNameFor(model => model.Student_Phone)
             </th>
@@ -36,7 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Department_FId)
             </th>
-            <th></th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -46,17 +39,12 @@
                 @Html.DisplayFor(modelItem => item.StudentName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Student_Rollno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student_Email)
+                <img src="~/Projectimg/@item.Student_Picture" style="height:100px; width:100px" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Student_Section)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student_Department)
-            </td>
+            
             <td>
                 @Html.DisplayFor(modelItem => item.Student_Phone)
             </td>

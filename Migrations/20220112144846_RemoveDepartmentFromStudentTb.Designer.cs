@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School_Management_System.Data;
 
 namespace School_Management_System.Migrations
 {
     [DbContext(typeof(SchoolManagementDb))]
-    partial class SchoolManagementDbModelSnapshot : ModelSnapshot
+    [Migration("20220112144846_RemoveDepartmentFromStudentTb")]
+    partial class RemoveDepartmentFromStudentTb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

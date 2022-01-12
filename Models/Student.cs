@@ -12,8 +12,8 @@ namespace School_Management_System.Models
         public String Student_Rollno { get; set; }
         public String Student_Email { get; set; }
         public String Student_Section { get; set; }
-        public String Student_Department { get; set; }
-        public String Student_Phone { get; set; }  
+
+        public String Student_Phone { get; set; }
         public DateTime Enrolled { get; set; }
         public String Student_Picture { get; set; }
         public ICollection<StudentCourse> Enrollment { get; set; } = new HashSet<StudentCourse>();

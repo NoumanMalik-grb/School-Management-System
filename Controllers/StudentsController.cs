@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using School_Management_System.Data;
 using School_Management_System.Models;
 using School_Management_System.ViewModel;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,10 +16,12 @@ namespace School_Management_System.Controllers
     public class StudentsController : Controller
     {
         private readonly SchoolManagementDb _context;
+        private readonly IWebHostEnvironment _webHost;
 
-        public StudentsController(SchoolManagementDb context)
+        public StudentsController(SchoolManagementDb context, IWebHostEnvironment webHost)
         {
             _context = context;
+            _webHost = webHost;
         }
 
         // GET: Students
@@ -46,6 +51,9 @@ namespace School_Management_System.Controllers
         // GET: Students/Create
         public IActionResult Create()
         {
+            IEnumerable<SelectListItem> items = _context.departments.Select
+            (c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name });
+            ViewBag.depatment = items;
             var courses = _context.courses.Select(x => new SelectListItem()
             {
                 Text = x.CoureName,
@@ -59,6 +67,7 @@ namespace School_Management_System.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateStudentViewModel VmModel)
         {
+            var uniquefilename = UploadImageStudent(VmModel);
 
              var student = new Student
                 {
@@ -66,12 +75,11 @@ namespace School_Management_System.Controllers
                     Student_Rollno=VmModel.Student_Rollno,
                     Student_Email=VmModel.Student_Email,
                     Student_Section=VmModel.Student_Section,
-                    Student_Department=VmModel.Student_Department,
+                    
                     Student_Phone=VmModel.Student_Phone,
                     Enrolled=VmModel.Enrolled,
-                };
-            
- 
+                    Student_Picture= uniquefilename
+             };
             var selectedcourses = VmModel.Allcourse.Where(x => x.Selected).Select(k => k.Value).ToList();
             foreach (var item in selectedcourses)
             {
@@ -85,7 +93,23 @@ namespace School_Management_System.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
-
+        // upload the image
+        private string UploadImageStudent(CreateStudentViewModel vmwModel)
+        {
+            string uniquefilename = null;
+            if (vmwModel.Student_Picture!=null)
+            {
+                var upload = Path.Combine(_webHost.WebRootPath, "Projectimg");
+                uniquefilename = Guid.NewGuid().ToString() 
+                + "_" + vmwModel.Student_Picture.FileName;
+                string filepath = Path.Combine(upload, uniquefilename);
+                using(var filestraem=new FileStream(filepath, FileMode.Create))
+                {
+                    vmwModel.Student_Picture.CopyTo(filestraem);
+                }
+            }
+            return uniquefilename;
+        }
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -108,7 +132,7 @@ namespace School_Management_System.Controllers
             vm.Student_Rollno = student.Student_Rollno;
             vm.Student_Email = student.Student_Email;
             vm.Student_Section = student.Student_Section;
-            vm.Student_Department = student.Student_Department;
+           
             vm.Student_Phone = student.Student_Phone;
             vm.Enrolled = student.Enrolled;
             vm.Allcourse = items;
@@ -127,7 +151,7 @@ namespace School_Management_System.Controllers
             student.Student_Rollno = vm.Student_Rollno;
             student.Student_Email = vm.Student_Email;
             student.Student_Section = vm.Student_Section;
-            student.Student_Department = vm.Student_Department;
+           
             student.Student_Phone = vm.Student_Phone;
             student.Enrolled = vm.Enrolled;
             var studentById = _context.students.Include(k => k.Enrollment).

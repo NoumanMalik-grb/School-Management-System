@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="StudentName" class="control-label"></label>
@@ -32,11 +32,7 @@
                 <input asp-for="Student_Section" class="form-control" />
                 <span asp-validation-for="Student_Section" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Student_Department" class="control-label"></label>
-                <input asp-for="Student_Department" class="form-control" />
-                <span asp-validation-for="Student_Department" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Student_Phone" class="control-label"></label>
                 <input asp-for="Student_Phone" class="form-control" />
@@ -48,16 +44,25 @@
                 <span asp-validation-for="Enrolled" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Student_Picture" class="control-label"></label>
+                <input asp-for="Student_Picture" />
+                <span asp-validation-for="Student_Picture" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
                 @for (int i = 0; i < Model.Allcourse.Count; i++)
                 {
                     <input asp-for="Allcourse[i].Value" type="hidden" />
-                    <input asp-for="Allcourse[i].Selected"/>@Model.Allcourse[i].Text
+                    <input asp-for="Allcourse[i].Selected" />@Model.Allcourse[i].Text
                 }
             </div>
             <div class="form-group">
-                <label asp-for="Department_FId" class="control-label"></label>
-                <input asp-for="Department_FId" class="form-control" />
-                <span asp-validation-for="Department_FId" class="text-danger"></span>
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.depatment">
+                    <option>
+                        select Department
+                    </option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

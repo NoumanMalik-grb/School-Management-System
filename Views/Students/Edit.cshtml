@@ -33,11 +33,7 @@
                 <input asp-for="Student_Section" class="form-control" />
                 <span asp-validation-for="Student_Section" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Student_Department" class="control-label"></label>
-                <input asp-for="Student_Department" class="form-control" />
-                <span asp-validation-for="Student_Department" class="text-danger"></span>
-            </div>
+          
             <div class="form-group">
                 <label asp-for="Student_Phone" class="control-label"></label>
                 <input asp-for="Student_Phone" class="form-control" />
@@ -49,9 +45,9 @@
                 <span asp-validation-for="Enrolled" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Department_FId" class="control-label"></label>
-                <input asp-for="Department_FId" class="form-control" />
-                <span asp-validation-for="Department_FId" class="text-danger"></span>
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <input asp-for="DepartmentId" class="form-control" />
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 @for (int i = 0; i < Model.Allcourse.Count; i++)

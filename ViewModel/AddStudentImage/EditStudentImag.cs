@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace School_Management_System.ViewModel
 {
-    public class UploadImageStudent
+    public class EditStudentImag: UploadImageStudent
     {
+        public int Id { get; set; }
+        public String ExistingImage { get; set; }
     }
 }
